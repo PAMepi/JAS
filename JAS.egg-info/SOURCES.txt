@@ -1,0 +1,8 @@
+README.md
+setup.py
+JAS/__init__.py
+JAS/models.py
+JAS.egg-info/PKG-INFO
+JAS.egg-info/SOURCES.txt
+JAS.egg-info/dependency_links.txt
+JAS.egg-info/top_level.txt
