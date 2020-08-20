@@ -1,14 +1,14 @@
 Metadata-Version: 2.1
 Name: JAS
-Version: 0.0.1
+Version: 0.0.2
 Summary: A python package to run compartimental models on epidemic data
 Home-page: UNKNOWN
-Author: Moreno Rodrigues
-Author-email: rodriguesmsb@gmail.com
+Author: Juliane Oliveira and Moreno Rodrigues
+Author-email: julianlanzin@gmail.com, rodriguesmsb@gmail.com
 License: UNKNOWN
 Description: # JAS
         
-        This is a just another sir implementation...
+        Just another sir implementation...
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
