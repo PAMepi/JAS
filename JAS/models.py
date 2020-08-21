@@ -158,7 +158,7 @@ class SIR_gd(compartimental_models):
         #sinf the epidemic curve
         #sdth the death curve
 
-        sinf = qs[:,-1].cumsum()
+        sinf = qs[:,-1]
 
         #define the standardized residuals
         erri = (self.pop * sinf - y) / np.sqrt(self.pop * sinf + 1.0)
