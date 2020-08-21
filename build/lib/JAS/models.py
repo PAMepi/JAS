@@ -166,7 +166,7 @@ class SIR_gd(compartimental_models):
         return np.r_[erri]
 
     
-    def fit(self, x, y, n_tries, bounds = [[0., 2.0], [1/14, 1/5], [0.,10./1749000.0]]):
+    def fit(self, x, y, n_tries, bounds = [[0., 2.0], [1/14, 1/5], [0.,10./self.pop]]):
         self.x = x
         self.y = y
         #
