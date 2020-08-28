@@ -184,7 +184,7 @@ class sir(compartimental_models):
         for i in range(n_tries):
         
             #create a set of ramdom parameters
-            par0 = np.random.rand(len(bounds))
+            par0 = np.random.rand(len(bounds[0]))
         
             #Limit those parameters to the interval defined
             par0 = bounds[:,0] + par0 * (bounds[:,1] - bounds[:,0])
