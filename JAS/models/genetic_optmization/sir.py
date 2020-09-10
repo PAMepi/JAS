@@ -18,7 +18,7 @@ import warnings
 warnings.filterwarnings('ignore')
  
 
-class start:
+class start_model:
     def __init__(self, pop):
         self.pop = pop
     

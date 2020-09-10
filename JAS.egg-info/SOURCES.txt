@@ -5,8 +5,8 @@ JAS.egg-info/PKG-INFO
 JAS.egg-info/SOURCES.txt
 JAS.egg-info/dependency_links.txt
 JAS.egg-info/top_level.txt
-JAS/genetic_optmization/__init__.py
-JAS/genetic_optmization/sir.py
-JAS/gradient_optmization/__init__.py
-JAS/gradient_optmization/sir.py
-JAS/gradient_optmization/sir_bv.py
+JAS/models/__init__.py
+JAS/models/genetic_optmization/__init__.py
+JAS/models/genetic_optmization/sir.py
+JAS/models/gradient_optmization/__init__.py
+JAS/models/gradient_optmization/sir.py

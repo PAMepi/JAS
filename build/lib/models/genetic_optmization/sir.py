@@ -16,9 +16,9 @@ from scipy.optimize import least_squares
 import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
+ 
 
-
-class sir:
+class start_model:
     def __init__(self, pop):
         self.pop = pop
     
@@ -75,7 +75,7 @@ class sir:
     def fit(self, x, y, ncores = -1, maxiter = 100, seed = 12, bounds = [(0,2), (1/21,1/4.99)]):
         bounds.append((1,1/self.pop))
         self.x = x.values.astype(np.float)
-        y = y.values.astype(np.float)/self.pop
+        y = y.values.astype(np.float)
         result_sir = optimize.differential_evolution(
             self.sir_least_squares_error_ode,
             bounds = bounds,
@@ -91,12 +91,14 @@ class sir:
         self.beta, self.gamma, self.i0 = result_sir.x[0], result_sir.x[1], result_sir.x[2]
     
     def predict(self, time):
-        time_pred = np.arange(min(self.x), max(self.x) + 1 + time, 1)
+        time_pred = np.arange(1, max(time) + 1, 1)
 
-        solution_ode = sir_ode_solver(time_pred, self.beta, self.gamma, self.i0)
+        solution_ode = self.sir_ode_solver(time_pred, self.beta, self.gamma, self.i0)
 
         self.S, self.I, self.R, self.Nw = solution_ode.y
-        return self.Nw * pop
+        return self.Nw * self.pop
+
+
     
     
 

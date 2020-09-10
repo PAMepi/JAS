@@ -28,7 +28,7 @@ class compartimental_models:
     def r0(self):
         return self.beta/self.gamma
 
-class start(compartimental_models):
+class start_model(compartimental_models):
     def __init__(self, pop):
         self.pop = pop
     
@@ -175,7 +175,7 @@ class start(compartimental_models):
 
 
 
-class sir_bv(compartimental_models):
+class start_model_bv(compartimental_models):
     def __init__(self, pop):
         self.pop = pop
     
