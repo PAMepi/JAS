@@ -9,4 +9,5 @@ JAS/models/__init__.py
 JAS/models/genetic_optmization/__init__.py
 JAS/models/genetic_optmization/sir.py
 JAS/models/gradient_optmization/__init__.py
+JAS/models/gradient_optmization/seir.py
 JAS/models/gradient_optmization/sir.py

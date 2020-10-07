@@ -21,14 +21,10 @@ warnings.filterwarnings('ignore')
 
 
 
-class compartimental_models:
-    def __init__(self):
-        pass
 
-    def r0(self):
-        return self.beta/self.gamma
 
-class start_model(compartimental_models):
+ 
+class start_model:
     def __init__(self, pop):
         self.pop = pop
     
@@ -115,6 +111,9 @@ class start_model(compartimental_models):
         
         self.beta, self.gamma, self.i0 = self.best_res.x
     
+    def r0(self):
+        return self.beta/self.gamma
+    
 
     def predict(self,time):
         
@@ -162,7 +161,7 @@ class start_model(compartimental_models):
 
         #pick best parameters
         parode = self.beta, self.beta1, self.gamma, self.t1
-        predicted = odeint(self.__sir, q0, np.arange(1, len(time) + 1), args = (parode,), mxstep = 1000000)
+        predicted = odeint(self.__sir, q0, np.arange(1, len(time) + 1), args = (parode,n_betas), mxstep = 1000000)
 
         self.S = predicted[:,0]
         self.I = predicted[:,1]
@@ -175,7 +174,7 @@ class start_model(compartimental_models):
 
 
 
-class start_model_bv(compartimental_models):
+class start_model_bv:
     def __init__(self, pop):
         self.pop = pop
     
@@ -272,6 +271,7 @@ class start_model_bv(compartimental_models):
                 self.best_res = res
         
         self.beta, self.beta1, self.gamma, self.t1, self.i0 = self.best_res.x
+        
         #note to transform t into the correct date use int(t1 - 1)
     
     def predict(self, time):
@@ -289,4 +289,3 @@ class start_model_bv(compartimental_models):
 
         #Compute cases
         return self.Nw * self.pop
-
