@@ -161,7 +161,7 @@ class start_model:
 
         #pick best parameters
         parode = self.beta, self.beta1, self.gamma, self.t1
-        predicted = odeint(self.__sir, q0, np.arange(1, len(time) + 1), args = (parode,n_betas), mxstep = 1000000)
+        predicted = odeint(self.__sir, q0, np.arange(1, len(time) + 1), args = (parode,), mxstep = 1000000)
 
         self.S = predicted[:,0]
         self.I = predicted[:,1]
