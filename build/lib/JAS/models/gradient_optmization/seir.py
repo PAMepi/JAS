@@ -168,12 +168,14 @@ class start_model:
             #Limit those parameters to the interval defined
             par0 = bounds[:,0] + par0 * (bounds[:,1] - bounds[:,0])
             
+            try:
+                res = optimize.least_squares(lambda pars: least_square_error(pars, ts0), par0, bounds = (bounds[:,0],bounds[:,1]))
         
-            res = optimize.least_squares(lambda pars: least_square_error(pars, ts0), par0, bounds = (bounds[:,0],bounds[:,1]))
-        
-            if res.cost < best_cost:
-                best_cost = res.cost
-                best_res = res
+                if res.cost < best_cost:
+                    best_cost = res.cost
+                    best_res = res
+            except:
+                pass
             
         #Define the dict wtih the parameters that will be returned by model
         if self.n_betas == 3:
