@@ -176,13 +176,26 @@ class start_model:
             
         #Define the dict wtih the parameters that will be returned by model
         if self.n_betas == 3:
-            self.beta, self.beta1, self.beta2, self.gamma, self.t1, self.t2, self.i0 = best_res.x
+            self.beta = best_res.x[0]
+            self.beta1 = best_res.x[1]
+            self.beta2 = best_res.x[2] 
+            self.gamma = best_res.x[3] 
+            self.t1 = best_res.x[4]
+            self.t2 = best_res.x[5] 
+            self.i0  = = best_res.x[6]
+            
 
         elif self.n_betas == 2:
-            self.beta, self.beta1, self.gamma, self.t1, self.i0 = best_res.x
+            self.beta = best_res.x[0] 
+            self.beta1 = best_res.x[1] 
+            self.gamma  = best_res.x[2]
+            self.t1 = best_res.x[3]
+            self.i0 = best_res.x[4]
            
         else:
-            self.beta, self.gamma, self.i0 = best_res.x
+            self.beta = best_res.x[0]
+            self.gamma = best_res.x[1]
+            self.i0 = best_res.x[2]
 
     def get_parameters(self):
         if self.n_betas == 3:
