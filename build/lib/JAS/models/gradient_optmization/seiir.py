@@ -180,13 +180,43 @@ class start_model:
             
         #Define the dict wtih the parameters that will be returned by model
         if self.n_betas == 3:
-            self.beta, self.beta1, self.beta2, self.delta, self.rho, self.kappa, self.gammaA, self.gammaS, self.t1, self.t2, self.e0, self.ia0, self.is0 = best_res.x
+            self.beta = best_res.x[0] 
+            self.beta1 = best_res.x[1] 
+            self.beta2 = best_res.x[2]  
+            self.delta = best_res.x[3]  
+            self.rho = best_res.x[4]  
+            self.kappa = best_res.x[5]  
+            self.gammaA = best_res.x[6]  
+            self.gammaS = best_res.x[7]  
+            self.t1 = best_res.x[8]  
+            self.t2 = best_res.x[9]  
+            self.e0 = best_res.x[10]  
+            self.ia0 = best_res.x[12] 
+            self.is0 = best_res.x[13]
 
         elif self.n_betas == 2:
-            self.beta, self.beta1, self.delta, self.rho, self.kappa, self.gammaA, self.gammaS, self.t1, self.e0, self.ia0, self.is0 = best_res.x
+            self.beta = best_res.x[0] 
+            self.beta1 = best_res.x[1]  
+            self.delta = best_res.x[2]  
+            self.rho = best_res.x[3]  
+            self.kappa = best_res.x[4]  
+            self.gammaA = best_res.x[5]  
+            self.gammaS = best_res.x[6]  
+            self.t1 = best_res.x[7]  
+            self.e0 = best_res.x[8]  
+            self.ia0 = best_res.x[9]  
+            self.is0 = best_res.x[10]
            
         else:
-            self.beta, self.delta, self.rho, self.kappa, self.gammaA, self.gammaS, self.e0, self.ia0, self.is0 = best_res.x
+            self.beta = best_res.x[0]  
+            self.delta = best_res.x[1]  
+            self.rho = best_res.x[2]  
+            self.kappa = best_res.x[3]  
+            self.gammaA = best_res.x[4]  
+            self.gammaS = best_res.x[5]  
+            self.e0 = best_res.x[6]  
+            self.ia0 = best_res.x[7]  
+            self.is0 = best_res.x[8]
 
     def get_parameters(self):
         if self.n_betas == 3:
