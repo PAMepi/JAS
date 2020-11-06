@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="JAS",
-    version="0.1.2",
+    version="0.1.3",
     author="Juliane Oliveira and Moreno Rodrigues",
     author_email="julianlanzin@gmail.com, rodriguesmsb@gmail.com",
-    description="A python package that cpild be used to  run compartimental models on epidemic data",
+    description="A python package that could be used to  run compartimental models on epidemic data",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="",

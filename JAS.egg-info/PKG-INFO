@@ -1,7 +1,7 @@
 Metadata-Version: 2.1
 Name: JAS
-Version: 0.1.2
-Summary: A python package that cpild be used to  run compartimental models on epidemic data
+Version: 0.1.3
+Summary: A python package that could be used to  run compartimental models on epidemic data
 Home-page: UNKNOWN
 Author: Juliane Oliveira and Moreno Rodrigues
 Author-email: julianlanzin@gmail.com, rodriguesmsb@gmail.com

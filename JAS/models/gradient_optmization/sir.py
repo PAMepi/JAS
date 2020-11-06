@@ -182,7 +182,7 @@ class start_model:
             self.gamma = best_res.x[3] 
             self.t1 = best_res.x[4]
             self.t2 = best_res.x[5] 
-            self.i0  = = best_res.x[6]
+            self.i0  = best_res.x[6]
             
 
         elif self.n_betas == 2:
