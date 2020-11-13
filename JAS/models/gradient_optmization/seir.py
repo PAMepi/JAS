@@ -85,7 +85,7 @@ class start_model:
         #return to derivatives that are common to all models
         dTt_dt = kappa * E
         dI_dt = kappa * E - gamma * I
-        dR_dt = gamma*I 
+        dR_dt = gamma * I 
         
         return dS_dt, dE_dt, dI_dt, dR_dt, dTt_dt
 
