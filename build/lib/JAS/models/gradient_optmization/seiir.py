@@ -88,20 +88,21 @@ class start_model:
 
     #Define the minimizer function
  
-    def fit(self, x, y, n_tries, n_betas, bounds = {"beta":  [0,2.0], 
-                                                    "beta1": [0,2.0],
-                                                    "beta2": [0,2.0],
-                                                    "delta": [0., 0.75],
-                                                    "rho": [0.13,0.5],
-                                                    "kappa": [1/6, 1/3],
-                                                    "gammaA": [1/3.7,1/3.24],
-                                                    "gammaS": [1/5,1/3],
-                                                    "t1": [0,45],
-                                                    "t2": [50,100]}):
+    def fit(self, x, y, n_tries, n_betas, fit_by = "cs", bounds = {"beta":  [0,2.0], 
+                                                                    "beta1": [0,2.0],
+                                                                    "beta2": [0,2.0],
+                                                                    "delta": [0., 0.75],
+                                                                    "rho": [0.13,0.5],
+                                                                    "kappa": [1/6, 1/3],
+                                                                    "gammaA": [1/3.7,1/3.24],
+                                                                    "gammaS": [1/5,1/3],
+                                                                    "t1": [0,45],
+                                                                    "t2": [50,100]}):
 
         self.n_betas = n_betas
         self.y = y
         self.x = x
+        self.fit_by = fit_by
     
         def least_square_error(pars, ts0):
         
@@ -126,8 +127,15 @@ class start_model:
             #Integrating
             qs = odeint(self.__seiir, q0, ts0, args = (parode, ), mxstep = 1000000)
         
-            #get the series cases value to minimize error
-            sinf = qs[:,-1]
+            #define the standardized residuals
+            if self.fit_by == "cs":
+                #get the series of cummulative cases to minimize error
+                sinf = qs[:,-1]
+
+            elif self.fit_by == "ts":
+                #get the series of daily cases to minimize error
+                sinf = np.r_[qs[:,-1][0], np.diff(qs[:,-1])]
+
 
             #define the standardized residuals
             erri = (self.pop * sinf - self.y) / np.sqrt(self.pop * sinf + 1.0)
@@ -246,7 +254,15 @@ class start_model:
         self.Ia = predicted[:,2]
         self.Is = predicted[:,3]
         self.R = predicted[:,4]
-        self.Tt = predicted[:,5]
+        
+        if self.fit_by == "cs":
+
+            #predict the series for cummulative cases
+            self.Tt = predicted[:,5]
+
+        elif self.fit_by == "ts":
+            #predict the series for daily cases
+            self.Tt = np.r_[predicted[:,5][0], np.diff(predicted[:,5])]
 
         return {"S": self.S, "E":self.E, "Ia": self.Ia, "Is": self.Is, "R": self.R, "Tt": self.Tt * self.pop}
 

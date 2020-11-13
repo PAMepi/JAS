@@ -91,17 +91,18 @@ class start_model:
 
     #Define the minimizer function
  
-    def fit(self, x, y, n_tries, n_betas, bounds = {"beta":  [0,2.0], 
-                                               "beta1": [0,2.0],
-                                               "beta2": [0,2.0],
-                                               "kappa": [1/6, 1/3],
-                                               "gamma": [1/14,1/7],
-                                               "t1": [0,45],
-                                               "t2": [50,100]}):
+    def fit(self, x, y, n_tries, n_betas, fit_by = "cs", bounds = {"beta":  [0,2.0], 
+                                                                   "beta1": [0,2.0],
+                                                                   "beta2": [0,2.0],
+                                                                   "kappa": [1/6, 1/3],
+                                                                   "gamma": [1/14,1/7],
+                                                                   "t1": [0,45],
+                                                                   "t2": [50,100]}):
 
         self.n_betas = n_betas
         self.y = y
         self.x = x
+        self.fit_by = fit_by
     
         def least_square_error(pars, ts0):
         
@@ -126,8 +127,15 @@ class start_model:
             #Integrating
             qs = odeint(self.__seir, q0, ts0, args = (parode, ), mxstep = 1000000)
         
-            #get the series cases value to minimize error
-            sinf = qs[:,-1]
+            #define the standardized residuals
+            if self.fit_by == "cs":
+                #get the series of cummulative cases to minimize error
+                sinf = qs[:,-1]
+
+            elif self.fit_by == "ts":
+                #get the series of daily cases to minimize error
+                sinf = np.r_[qs[:,-1][0], np.diff(qs[:,-1])]
+
 
             #define the standardized residuals
             erri = (self.pop * sinf - self.y) / np.sqrt(self.pop * sinf + 1.0)
@@ -230,7 +238,16 @@ class start_model:
         self.E = predicted[:,1]
         self.I = predicted[:,2]
         self.R = predicted[:,3]
-        self.Tt = predicted[:,4]
+
+        if self.fit_by == "cs":
+
+            #predict the series for cummulative cases
+            self.Tt = predicted[:,4]
+
+        elif self.fit_by == "ts":
+            #predict the series for daily cases
+            self.Tt = np.r_[predicted[:,4][0], np.diff(predicted[:,4])]
+
         return {"S": self.S, "E":self.E, "I": self.I, "R": self.R, "Tt": self.Tt * self.pop}
 
 
