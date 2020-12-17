@@ -12,7 +12,7 @@ Created on Tue Aug 20 2020
 
 from scipy.integrate import odeint
 from scipy import optimize
-from scipy.integrate import odeint
+from scipy.integrate import odeint, quad
 from scipy.optimize import least_squares
 import numpy as np
 import warnings
@@ -241,6 +241,66 @@ class start_model:
             self.Tt = np.r_[predicted[:,3][0], np.diff(predicted[:,3])]
         
         return {"S": self.S, "I": self.I, "R": self.R, "Tt": self.Tt * self.pop}
+    
+
+    def __bootWeig(self, series):
+        results = []
+        for i in range(0,self.boot_ci):
+            results.append(np.random.multinomial(n = np.sum(series), pvals = series/np.sum(series)))
+        return np.array(results)
+    
+    def __compute_ci(self, list_of_rt):
+        length = len(self.daily_cases)
+        list_of_rt = np.array(list_of_rt)
+        lower_bound = [np.quantile(list_of_rt[:,i], q = 0.025) for i in range(0,length)]
+        upper_bound = [np.quantile(list_of_rt[:,i], q = 0.975) for i in range(0,length)]
+        mean_value = [np.quantile(list_of_rt[:,i], q =  0.5) for i in range(0,length)]
+        return [lower_bound, mean_value, upper_bound]
+        
+    
+    def __integrand(self, a, t):
+        if a > t:
+            return 0
+        else:
+            return self.daily_cases[t-a] * (self.gamma * np.exp(-self.gamma*a))
+    
+    def __rt(self, t):
+        self.__vec_integrand = np.vectorize(self.__integrand)
+        series =  self.daily_cases[t]/np.sum(self.__vec_integrand(a = np.arange(0,len(self.daily_cases)), t = t))
+        return series
+        
+    
+    def rt(self, daily_cases, gamma, boot_ci = 1):
+
+        ##Add a option to smoth series before compute ci
+        self.daily_cases = daily_cases.to_numpy()
+        self.boot_ci = boot_ci
+        self.__vec_rt = np.vectorize(self.__rt)
+
+        try:
+            self.gamma = self.gamma
+        except:
+            self.gamma = gamma
+
+        if self.boot_ci <= 1:
+            self.__vec_rt = np.vectorize(self.__rt)
+            self.rt_result = self.__vec_rt(t = np.arange(0,len(self.daily_cases)))
+        elif self.boot_ci > 1:
+            boot_data = self.__bootWeig(self.daily_cases)
+            self.rt_result = []
+
+            for serie in boot_data:
+                self.daily_cases = serie
+                self.rt_result.append(self.__vec_rt(t = np.arange(0,len(self.daily_cases))))
+            self.rt_result = self.__compute_ci(self.rt_result)
+        return self.rt_result
+    
+
+
+
+
+        
+        
 
 
 
